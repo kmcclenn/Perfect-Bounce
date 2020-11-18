@@ -48,29 +48,33 @@ class Ball {
   void run() {
     draw_self();
     move();
-
+    boolean bounce_happened = false;
+ 
     if (y + h/2 + y_speed >= height) {
       float[] attrs_array = prebounce(y, height, y_speed, h, y_acceleration);
       y_speed = attrs_array[0];
       y = attrs_array[1];
-      //y_speed = -1 * y_speed;
-    } else if (x + w/2 + x_speed >= width) {
-      //bounce();
+      bounce_happened = true;
+    } 
+    if (x + w/2 + x_speed >= width) {
       float[] attrs_array = prebounce(x, width, x_speed, w, x_acceleration);
       x_speed = attrs_array[0];
       x = attrs_array[1];
-    } else if (y - h/2 + y_speed <= 0) {
-      float[] attrs_array = prebounce(y, 0, y_speed, -h, y_acceleration);
+      bounce_happened = true;
+    } 
+    if (y - h/2 + y_speed <= 0) {
+      float[] attrs_array = prebounce(y, 0, y_speed, -1 * h, y_acceleration);
       y_speed = attrs_array[0];
       y = attrs_array[1];
-      y_speed = -1 * y_speed;
-    } else if (x - w/2 + x_speed <= 0) {
-      //bounce();
-      float[] attrs_array = prebounce(x, 0, x_speed, -w, x_acceleration);
+      bounce_happened = true;
+    } 
+    if (x - w/2 + x_speed <= 0) {
+      float[] attrs_array = prebounce(x, 0, x_speed, -1 * w, x_acceleration);
       x_speed = attrs_array[0];
       x = attrs_array[1];
-      //x_speed = -1 * x_speed;
-    } else {
+      bounce_happened = true;
+    } 
+    if (!bounce_happened) {
       accelerate();
     }
   }
